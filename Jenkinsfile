@@ -10,6 +10,7 @@ pipeline {
 				sleep 2
 				fileExists 'main.js'
 				input 'Do you want to run main.js?'
+				bat 'npm install'
 				bat 'node main.js'
             }
         }
