@@ -7,7 +7,7 @@ pipeline {
 				sleep 2
 				fileExists 'main.js'
 				input 'Do you want to run main.js?'
-				sh 'node main.js'
+				sh 'echo Hello world'
             }
         }
     }
