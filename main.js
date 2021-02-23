@@ -1,2 +1,2 @@
-console.log('Hello world! NEW');
+console.log('Hello world! From ', process.env.CURRENT_ENV);
 
