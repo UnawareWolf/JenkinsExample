@@ -1,20 +1,20 @@
 Instructions from Corndell workshop (David Wright)
 
-#Jenkins
-##Introduction
+# Jenkins
+## Introduction
 Jenkins is a tool that facilitates two processes:
 Continuous Integration – Code is merged into a main branch and then built and tested automatically.
 Continuous Delivery – Production artefacts (e.g. jar files, exe files, etc.) are easily pushed to production environments.
 
-###Continuous Integration
+### Continuous Integration
 The core principle of continuous integration is that code changes should be merged into the main branch of a repository as soon as possible. Under continuous integration all code branches should be short lived and their changes merged back into the main branch frequently. It favours small, incremental changes over large, comprehensive updates.
 
 Regular code merges reduce the risk of two developers changing the same code at the same time. This reduces both the number and the severity of merge conflicts.  CI also speeds up development.  Merging your code changes into the main branch regularly makes your code changes available to other developers as soon as possible so they can build upon your work.
 
-###Continuous Delivery
+### Continuous Delivery
 Continuous delivery (CD) is about building pipelines that automate software deployment.  Continuous delivery pipelines can be built as standalone tools, but are most often built on top of CI pipelines: if your code passes all the tests, the CI/CD platform builds/compiles/ bundles it, and its dependencies, into an easily deployable build artefact which is stored somewhere for easy access during future deployments. At the click of a button, the CD pipeline can deploy the artefact into a target environment.
 
-##Jenkins Setup
+## Jenkins Setup
 Normally Jenkins would run on a dedicated machine, but in order to facilitate learning we need a version that we can start, stop and reconfigure on our terms.  Therefore we’re going to run a Jenkins server on our local machines.
 
 <ul>
@@ -27,24 +27,24 @@ Normally Jenkins would run on a dedicated machine, but in order to facilitate le
 <li>You can skip creating an admin user.</li>
 </ul>
 
-##Project Setup
+## Project Setup
 We will create a simple project using JavaScript (don’t worry if you’re unfamiliar with the language!) and then get Jenkins to build, test and deploy it.  However, first we need a project that we can even run on our own machines!
 
-###Installing node, npm and git
+### Installing node, npm and git
 If you don’t already have them installed, install nodejs and git.  Installing node should also install npm.  You can check whether they have installed correctly by typing:
 <br>node -v
 <br>npm -v
 <br>git --version
 
-###Creating a new node project
+### Creating a new node project
 Create a new folder called JenkinsTestProject, open a Git Bash window at that location and create a new project by typing npm init.  You can accept all the default options.  Also initialise a git repository at the location by typing git init.  Also create a new public repository at GitHub and push your new project to it.
 
-###Writing some dummy code
+### Writing some dummy code
 Create a new file called main.js and copy/paste the following line of code.
 console.log('Hello world!');
 You should then be able to run node main.js from the Git Bash window and see it output the message.
 
-##Getting Jenkins to build the project
+## Getting Jenkins to build the project
 By this point you should have:
 <ul>
 <li>Jenkins, node, npm and git installed</li>
@@ -53,13 +53,13 @@ By this point you should have:
 </ul>
 We now need to tell our Jenkins server about our project on GitHub.
 
-###Installing the GitHub plugin
+### Installing the GitHub plugin
 Follow the instructions on the Jenkins website about how to install a plugin.  I recommend using the web UI to do this.  The plugin you’re looking for is called GitHub and should match the most recent version listed on the GitHub plugin website (https://plugins.jenkins.io/github/).  You will most likely need to restart the server afterwards.
 
-###Pipelines
+### Pipelines
 Pipelines are the normal way of working with Jenkins.  Code goes in one end, build artefacts come out the other end and various code building, testing and validation is done in the middle.  We’re going to create a build pipeline for our little project.
 
-###Creating a new project
+### Creating a new project
 <ul>
 <li>On the web UI click New Item and create a new Pipeline project.</li>
 <li>Click the “GitHub project” button and give it the URL of your GitHub project.</li>
@@ -85,7 +85,7 @@ At this point your build is ready to do something, but it won’t do so because 
 <li>The project should build fairly quickly.  You can then look at the console output by clicking the build number (e.g. #1) and then choosing Console Output on the left hand side.  You’ll also see a navigation section at the top of the page, e.g. Dashboard > MyJenkinsProject > #1.</li>
 </ul>
 
-###Snippets
+### Snippets
 Jenkins has a built in snippet generator for creating parts of a Jenkinsfile.  You can find it by going to your pipeline configuration and then going all the way to the bottom where you’ll find a hyperlink to Pipeline Syntax.
 
 Using the Pipeline Syntax helper, modify your Jenkinsfile so that it performs the following operations in this order:
@@ -99,7 +99,7 @@ Using the Pipeline Syntax helper, modify your Jenkinsfile so that it performs th
 
 Once you’ve added everything, go back to the web UI and click Build Now to build it again.
 
-###Automated builds
+### Automated builds
 A Jenkins pipeline can be run manually as you have been doing.  However, it’s much more normal for the pipeline to automatically run every time you push a change to your GitHub repo.  To enable this we need to go to GitHub and create a webhook.  Jenkins can then use that webhook to receive a notification each time something changes.
 
 The problem is that GitHub is out there on the internet, but your Jenkins server is running on localhost.  So we can’t tell GitHub where on the internet to find your Jenkins server.  Fortunately, there’s a tool call ngrok (https://ngrok.com/) which can help here.
@@ -128,7 +128,7 @@ N.B.: The trailing / is very important.  If you leave it off it will not work.
 
 Now, when you commit and push a change to your repo you it should automatically run the pipeline.
 
-##Other topics to investigate
+## Other topics to investigate
 By this point you have successfully set up a Jenkins server which has a project pipeline set up and will automatically run the pipeline whenever you run git push.  Some other topics you could investigate independently:
 <ul>
 <li>How to set environment variables differently, so for example when you run node main.js from your own machine it prints, “Hello development world!” but when Jenkins runs it then instead it prints, “Hello release world!”</li>
